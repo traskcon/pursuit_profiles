@@ -35,7 +35,7 @@ class TackleSequence:
             self.end_frameId >= self.start_frameId
         ), "end_frameId must be greater than or equal to start_frameId"
 
-        self.input_tensor = torch.empty()
+        self.input_tensor = torch.empty(0)
 
     def __repr__(self) -> str:
         return f"TackleSequence(gameId={self.gameId}, playId={self.playId}, start_frameId={self.start_frameId}, end_frameId={self.end_frameId}, ballCarrierId={self.ballCarrierId}, tacklerId={self.tacklerId}, target={self.target})"

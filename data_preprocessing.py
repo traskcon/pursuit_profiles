@@ -499,7 +499,7 @@ def build_training_tackle_sequences(
 
 
 def standardize_tackle_sequences(
-    tackle_sequences: list, means: torch.Tensor = torch.empty(), stds: torch.Tensor = torch.empty()
+    tackle_sequences: list, means: torch.Tensor = torch.empty(0), stds: torch.Tensor = torch.empty(0)
 ) -> tuple:
     """
     Use this function to standardize a tackle sequence. If means and stds are provided, then they will be used to perform the standardization.
