@@ -610,7 +610,7 @@ def get_play_outcomes(
     return outcomes
 
 
-def restore_geometry(df):
+def restore_geometry(df: pd.DataFrame) -> pd.DataFrame:
     """
     Given a dataframe with columns ["x_clean", "y_clean", "s_clean", "a_clean", "dir_clean", "o_clean"], restore the original
     geometry by dividing x_clean, y_clean, s_clean, and a_clean by 100, and dividing dir_clean and o_clean by 10. The output
