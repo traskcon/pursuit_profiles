@@ -96,8 +96,12 @@ labeled_data = pursuit_profiles.merge(df_players, on="nflId")
 labeled_data.sort_values(by=["s_p","theta_p"], ascending=False, inplace=True)
 print(labeled_data)
 
+df_tackle = pd.read_csv("./data/tackles.csv", usecols=["nflId","tackle","pff_missedTackle"])
+player_tackles = df_tackle.groupby("nflId").sum()
+labeled_data = labeled_data.merge(player_tackles, on="nflId")
+
 fig = px.scatter(labeled_data, x="s_p", y="theta_p", color="position", 
-                 hover_data=["displayName"], 
+                 hover_data=["displayName","pff_missedTackle"], size="tackle",
                  labels={"s_p":"Pursuit Speed (yds/sec)",
                         "theta_p":"Pursuit Angle (deg)"})
 fig.show()
