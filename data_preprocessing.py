@@ -616,6 +616,9 @@ def restore_geometry(df):
     geometry by dividing x_clean, y_clean, s_clean, and a_clean by 100, and dividing dir_clean and o_clean by 10. The output
     datatype will be float16.
     """
+    # Explicitly cast columns to float16 first
+    df = df.astype({"x_clean":"float16","y_clean":"float16","s_clean":"float16",
+                    "a_clean":"float16","dir_clean":"float16","o_clean":"float16"})
     df.loc[:, "x_clean"] = df["x_clean"] / 100
     df.loc[:, "y_clean"] = df["y_clean"] / 100
     df.loc[:, "s_clean"] = df["s_clean"] / 100

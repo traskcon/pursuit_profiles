@@ -4,7 +4,7 @@ import pandas as pd
 import pickle
 
 from data_cleaning import clean_data, optimize_memory_usage
-from data_preprocessing import aggregate_data, annotate_missed_tackle_frames, annotate_tackle_frames
+from data_preprocessing import aggregate_data, restore_geometry
 
 # 1. Load and prepare data -----------------------------------------------------
 
@@ -42,17 +42,19 @@ def calculate_pursuit_metrics(df_frame: pd.DataFrame, tacklerId: int) -> tuple:
     # For a single frame of tracking data, calculate a given tackler's pursuit metrics
     ballCarrierId = df_frame.ballCarrierId.iloc[0]
     # Pursuit speed (yards/s)
-    s_p = df_frame[df_frame.nflId == tacklerId].s_clean.values[0]/100
+    s_p = df_frame[df_frame.nflId == tacklerId].s_clean.values[0]
     # Pursuit angle (deg)
-    pos_bc = df_frame[df_frame.nflId == ballCarrierId][["x_clean","y_clean"]].values[0]/100
-    pos_p = df_frame[df_frame.nflId == tacklerId][["x_clean","y_clean"]].values[0]/100
+    pos_bc = df_frame[df_frame.nflId == ballCarrierId][["x_clean","y_clean"]].values[0]
+    pos_p = df_frame[df_frame.nflId == tacklerId][["x_clean","y_clean"]].values[0]
     theta_rel = np.arctan2(pos_bc[1] - pos_p[1], pos_bc[0] - pos_p[0])*180/np.pi
     theta_rel = (theta_rel + 360) % 360
-    p_heading = df_frame[df_frame.nflId == tacklerId]["dir_clean"].values[0]/10
-    theta_p = np.abs(p_heading - theta_rel)
+    p_heading = df_frame[df_frame.nflId == tacklerId]["dir_clean"].values[0]
+    # print("BC Angle: {}, Heading: {}".format(theta_rel,p_heading))
+    angle_diff = np.abs(p_heading - theta_rel)
+    theta_p = 360 - angle_diff if angle_diff > 180 else angle_diff
     return s_p, theta_p
 
-game_id = 2022091200
+'''game_id = 2022091200
 play_id = 3826
 tackler_id = 42827
 
@@ -60,4 +62,4 @@ df_play = df_opt[(df_opt["gameId"] == game_id)&(df_opt["playId"] == play_id)]
 for frame in pd.unique(df_play.frameId.values):
     df_frame = df_play[df_play["frameId"] == frame]
     print("Frame: {}, v_p: {}, Angle: {:.4f}".format(frame,
-                            *calculate_pursuit_metrics(df_frame, tackler_id)))
+                            *calculate_pursuit_metrics(df_frame, tackler_id)))'''
