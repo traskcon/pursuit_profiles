@@ -189,7 +189,7 @@ for frameId in sorted_frame_list:
                 hover_text_array.append(
                     f"nflId:{selected_player_df['nflId'].values[0]}"
                 )
-                if nflId == 42827:
+                if nflId == 52435:
                     frame_data = df_focused[df_focused.frameId == frameId]
                     v_p, theta_p = calculate_pursuit_metrics(frame_data, nflId)
                     x_p, y_p = selected_player_df[["x_clean","y_clean"]].values[0]
