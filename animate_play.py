@@ -23,8 +23,8 @@ pio.renderers.default = (
 # Modify the variables below to plot your desired play
 tracking_file = "data/tracking_week_1.csv"
 plays_file = "data/plays.csv"
-game_id = 2022091200
-play_id = 3826
+game_id = 2022090800
+play_id = 299
 
 # Test cases:
 # 2022090800, 1385 = going left, on attacking half
